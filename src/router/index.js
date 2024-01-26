@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import ShowBook from "../views/Customer/ShowBook.vue";
-import Home from "../views/Customer/Home.vue";
 import adminDashboard from "../views/Admin/Dashboard.vue";
+import FirstPage from "../components/First.vue"
 import adminLogin from "../views/Admin/Login.vue";
 import adminRegister from "../views/Admin/Register.vue";
 import adminEdit from "../views/Admin/Book/Edit.vue";
@@ -13,13 +12,8 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home,
-    },
-    {
-      path: "/show/:id",
-      name: "show",
-      component: ShowBook,
+      name: "first",
+      component: FirstPage,
     },
     {
       path: "/admin",

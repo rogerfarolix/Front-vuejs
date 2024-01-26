@@ -6,16 +6,16 @@
                 <p class="text-danger" v-if="errors && errors.message">{{ errors.message[0] }}</p>
                 <form @submit.prevent="login()">
                     <div class="form-group mt-3">
-                        <label for="email">Email Address:</label>
+                        <label for="email">Adresse Email:</label>
                         <input type="email" v-model="form.email" class="form-control" id="email" />
                         <p class="text-danger" v-if="errors && errors.email">{{ errors['email'][0] }}</p>
                     </div>
                     <div class="form-group mt-3">
-                        <label for="password">Password:</label>
+                        <label for="password">Mot de passe:</label>
                         <input type="password" v-model="form.password" class="form-control" id="password" />
                         <p class="text-danger" v-if="errors && errors.password">{{ errors['password'][0] }}</p>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Login</button>
+                    <button type="submit" class="btn btn-primary mt-3">Se connecter</button>
                 </form>
             </div>
         </div>
