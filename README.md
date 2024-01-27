@@ -1,18 +1,7 @@
 
 ```
-1.Clone to local reposatry from main branch
-2.Run "npm install" command - to install depandancies
-3.Run "npm run dev" command - to start server
-note:Please run on "http://localhost:3000" after running backend server
-```
-
-### How to access admin pages:
-All the admin routes are prefixed by '/admin':
-so to open admin panel we have to goto the "http://localhost:3000/admin" route
-:
-```
-
-Admin can register and login himself
-Admin can see all the books from the database by applyig search accordingly
-Admin can edit/delete/show/add book
+1. Cloner le dépôt local à partir de la branche principale
+2. Exécuter la commande "npm install" - pour installer les dépendances
+3. Exécuter la commande "npm run dev" - pour démarrer le serveur
+note: Veuillez exécuter sur "http://localhost:3000" après avoir démarré le serveur backend
 ```
