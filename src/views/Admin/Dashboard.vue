@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card custom-card">
           <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">Nombre total de tâches</h6>
@@ -28,19 +28,27 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card custom-card">
           <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">Tâches non débutées</h6>
-            <p class="card-text text-center">{{ getTaskCountByStatus('Non débuté') }}</p>
+            <p class="card-text text-center">{{ getTaskCountByStatus('non_debute') }}</p>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card custom-card">
           <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">Tâches en cours</h6>
-            <p class="card-text text-center">{{ getTaskCountByStatus('En cours') }}</p>
+            <p class="card-text text-center">{{ getTaskCountByStatus('en_cours') }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card custom-card">
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">Tâches terminées</h6>
+            <p class="card-text text-center">{{ getTaskCountByStatus('termine') }}</p>
           </div>
         </div>
       </div>
@@ -66,14 +74,18 @@
                     <td>{{ data.id }}</td>
                     <td>{{ data.title }}</td>
                     <td>
-                      {{ data.status }}
-                      <button @click.prevent="changeStatus(data)" class="btn btn-success ml-2" :disabled="data.status === 'Terminé'">Changer Statut</button>
+                      <span v-if="data.status=='non_debute'">Non débuté</span>
+                      <span v-if="data.status=='en_cours'">En cours</span>
+                      <span v-if="data.status=='termine'">Terminé</span>
+                      <button @click.prevent="changeStatus(data)" class="btn btn-success ml-2" :disabled="data.status === 'Terminé'">
+                        Changer Statut
+                      </button>
                     </td>
                     <td>{{ data.published }}</td>
                     <td>
                       <router-link class="btn btn-primary m-1" :to="{ name: 'admin.edit', params: { id: data.id } }">Modifier</router-link>
                       <router-link class="btn btn-info m-1" :to="{ name: 'admin.show', params: { id: data.id } }">Détails</router-link>
-                      <button @click.prevent="deleteBook(data.id, data.title)" class="btn btn-danger m-1">Supprimer</button>
+                      <button @click.prevent="deleteTask(data.id, data.title)" class="btn btn-danger m-1">Supprimer</button>
                     </td>
                   </tr>
                 </tbody>
@@ -144,8 +156,8 @@
         this.url = url;
         this.getData();
       },
-      deleteBook(id, title) {
-        if (confirm("Voulez-vous réellement supprimer? " + title + " task?")) {
+      deleteTask(id, title) {
+        if (confirm("Voulez-vous réellement supprimer la tâche " + title + "?")) {
           axios.delete(this.$hostname + "/api/task/" + id, {
             headers: {
               Authorization: `Bearer ${this.token}`,
@@ -154,7 +166,7 @@
           })
             .then(response => {
               if (response.data.success) {
-                alert(title + " Tâche supprimée.")
+                alert(title + "  supprimée.")
                 this.getData()
               }
             })
@@ -167,31 +179,44 @@
         this.$router.push({ name: "admin.create" });
       },
       changeStatus(data) {
-        const newStatus = data.status === 'Non débuté' ? 'En cours' : 'Terminé';
-        if (confirm(`Voulez-vous changer le statut de la tâche "${data.title}" à "${newStatus}"?`)) {
-          axios.put(this.$hostname + "/api/task/" + data.id, { status: newStatus }, {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-              token: this.token
-            }
-          })
-            .then(response => {
-              if (response.data.success) {
-                alert(`Le statut de la tâche "${data.title}" a été changé à "${newStatus}".`)
-                this.getData()
-              }
-            })
-            .catch(e => {
-              this.errors.push(e);
-            });
-        }
-      },
+    let newStatus = '';
+
+    if (data.status === 'Non débuté') {
+      newStatus = 'En cours';
+    } else if (data.status === 'En cours') {
+      newStatus = 'Terminé';
+    }
+
+    if (newStatus !== '') {
+      if (confirm(`Voulez-vous changer le statut de la tâche "${data.title}" à "${newStatus}"?`)) {
+        axios.put(this.$hostname + "/api/task/" + data.id, { status: newStatus }, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            token: this.token
+          }
+        })
+        .then(response => {
+          if (response.data.success) {
+            alert(`Le statut de la tâche "${data.title}" a été changé à "${newStatus}".`);
+            data.status = newStatus; // Mettez à jour le statut localement
+          }
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+      }
+    }
+  },
+
+
+  
       getTaskCountByStatus(status) {
         return this.tableData.filter(task => task.status === status).length;
       }
-    },
+    }
   }
   </script>
+  
   <style scoped>
   .custom-card {
     background-color: #5c93ca; /* Couleur de fond */

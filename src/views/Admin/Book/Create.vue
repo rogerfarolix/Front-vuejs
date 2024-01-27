@@ -22,9 +22,14 @@
                 </div>
                 <div class="form-group">
                   <label for="status">Statut:</label>
-                  <input type="text" class="form-control" v-model="form.status" id="status" />
-                  <p class="text-danger" v-if="errors && errors.status">{{ errors['status'][0] }}</p>
+                    <select v-model="form.status" class="form-control" id="status">
+                      <option value="non_debute">Non débuté</option>
+                      <option value="en_cours">En cours</option>
+                      <option value="termine">Terminé</option>
+                    </select>
+                    <p class="text-danger" v-if="errors && errors.status">{{ errors['status'][0] }}</p>
                 </div>
+
                 <div class="form-group">
                   <label for="published">Date:</label>
                   <input type="date" class="form-control" v-model="form.published" id="published" />
