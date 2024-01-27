@@ -15,3 +15,9 @@ app.use(router);
 app.use(VueAxios, axios);
 
 app.mount("#app");
+
+
+
+
+//Rogergnanih
+//Armanddjeha
