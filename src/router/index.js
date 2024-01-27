@@ -3,9 +3,9 @@ import adminDashboard from "../views/Admin/Dashboard.vue";
 import FirstPage from "../components/First.vue"
 import adminLogin from "../views/Admin/Login.vue";
 import adminRegister from "../views/Admin/Register.vue";
-import adminEdit from "../views/Admin/Book/Edit.vue";
-import adminCreate from "../views/Admin/Book/Create.vue";
-import adminShow from "../views/Admin/Book/Show.vue";
+import adminEdit from "../views/Admin/Task/Edit.vue";
+import adminCreate from "../views/Admin/Task/Create.vue";
+import adminShow from "../views/Admin/Task/Show.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
